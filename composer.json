@@ -1,24 +1,24 @@
 {
     "name": "madetalent/etalentsoap",
     "type": "library",
-    "description": ":package_description",
+    "description": "Etalent SDK by Mongeral Aegon",
     "keywords": [
         "madetalent",
         "etalentsoap"
     ],
-    "homepage": "https://github.com/madetalent/etalentsoap",
+    "homepage": "https://github.com/MongeralAegonDigital/madetalent",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": ":author_website",
-            "role": "Developer"
+            "name": "Jonathan iqueda",
+            "email": "jonathaniqueda@me.com",
+            "role": "Back-end Developer"
         }
     ],
     "require": {
         "illuminate/support": "~5.1",
-        "php" : "~5.5|~7.0"
+        "php" : "~5.5|~7.0",
+        "artisaninweb/laravel-soap": "0.2.*"
     },
     "require-dev": {
         "phpunit/phpunit" : "4.*",
