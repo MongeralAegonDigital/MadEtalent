@@ -1,10 +1,10 @@
 <?php
 
-namespace madetalent\etalentsoap;
+namespace Madetalent\Etalentsoap;
 
 use Illuminate\Support\ServiceProvider;
 
-class etalentsoapServiceProvider extends ServiceProvider
+class EtalentsoapServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
