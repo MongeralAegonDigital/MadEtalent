@@ -2,79 +2,32 @@
 
 namespace Madetalent\Etalentsoap\Etalent;
 
-use Madetalent\Etalentsoap\Etalent\Factory\StrategyFactory;
-use \SoapWrapper;
+use madetalent\etalentsoap\Etalent\Factory\StrategyFactory;
+use madetalent\etalentsoap\Etalent\Soap\SoapCustomRequest;
 
-class ManagerEtalentStrategy
+class ManagerEtalentStrategy extends SoapCustomRequest
 {
 
-    public $soapConnection;
+    protected $exception = "Infelizmente não conseguimos processar sua requisição. Tente novamente mais tarde.";
 
-    public function __construct($wsdlUrl, $user, $password)
+    public function __construct($wsdlUrl, $user, $pass)
     {
-        $xml = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:e="http://e-talent.com.br/">
-   <soapenv:Header>
-      <e:Consumer>
-         <!--Optional:-->
-         <e:Login>ws_mongeral</e:Login>
-         <!--Optional:-->
-         <e:Senha>desenv</e:Senha>
-      </e:Consumer>
-   </soapenv:Header>
-   <soapenv:Body>
-      <e:RetornarQuestionario/>
-   </soapenv:Body>
-</soapenv:Envelope>';
-
-        $soapBody = new \SoapVar($xml, \XSD_ANYXML);
-
-        $soap = new \SoapClient($wsdlUrl, array ('trace' => true));
-        $header[] = new \SoapHeader('Consumer', 'Login', $user);
-        $header[] = new \SoapHeader('Consumer', 'Senha', $password);
-        $soap->__setSoapHeaders($header);
-        dd($soap->__soapCall('RetornarQuestionario', array ($soapBody)));
-
-        // Add a new service to the wrapper
-        $this->soapConnection = SoapWrapper::add(function ($service) use ($wsdlUrl, $user, $password) {
-                    $service->name('etalent')
-                            ->wsdl($wsdlUrl)
-                            ->trace(true)
-                            ->header('Consumer', 'Login', $user)
-                            ->header('Consumer', 'Senha', $password)
-                            ->cache(WSDL_CACHE_NONE);
-                });
-
-        // Using the added service
-        SoapWrapper::service('etalent', function ($service) {
-            dd($service->get());
-            $service->call('RetornarQuestionario');
-        });
+        parent::__construct($wsdlUrl, $user, $pass, [ 'cache_wsdl' => WSDL_CACHE_NONE, 'trace' => true, 'exceptions' => true]);
     }
 
-    public function create(Request $request)
+    public function getQuestionario()
     {
-        $param = $request->all();
+        // Make the request
+        try {
+            $request = $this->call('RetornarQuestionario', []);
 
-        $strategyClass = StrategyFactory::get($param['strategy']);
-
-        return $strategyClass->create($request);
-    }
-
-    public function get(Request $request)
-    {
-        $param = $request->all();
-
-        $strategyClass = StrategyFactory::get($param['strategy']);
-
-        return $strategyClass->get($request);
-    }
-
-    public function send(Request $request)
-    {
-        $param = $request->all();
-
-        $strategyClass = StrategyFactory::get($param['strategy']);
-
-        return $strategyClass->send($request);
+            if (isset($request->RetornarQuestionarioResult)) {
+                return $this->xmlToJsonConvert($request->RetornarQuestionarioResult);
+            } else {
+                throw new \Exception($this->exception);
+            }
+        } catch (\SoapFault $e) {
+            throw new \Exception($e->getMessage(), $e->getCode());
+        }
     }
 }

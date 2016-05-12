@@ -17,8 +17,7 @@
     ],
     "require": {
         "illuminate/support": "~5.1",
-        "php": "~5.5|~7.0",
-        "artisaninweb/laravel-soap": "0.2.*"
+        "php": "~5.5|~7.0"
     },
     "require-dev": {
         "scrutinizer/ocular": "~1.1",
@@ -26,12 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "madetalent\\etalentsoap\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "madetalent\\etalentsoap\\": "tests"
+            "Madetalent\\Etalentsoap\\": "src"
         }
     },
     "extra": {
