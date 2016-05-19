@@ -2,7 +2,6 @@
 
 namespace Madetalent\Etalentsoap\Etalent;
 
-use madetalent\etalentsoap\Etalent\Factory\StrategyFactory;
 use madetalent\etalentsoap\Etalent\Soap\SoapCustomRequest;
 
 class ManagerEtalentStrategy extends SoapCustomRequest
@@ -15,14 +14,14 @@ class ManagerEtalentStrategy extends SoapCustomRequest
         parent::__construct($wsdlUrl, $user, $pass, [ 'cache_wsdl' => WSDL_CACHE_NONE, 'trace' => true, 'exceptions' => true]);
     }
 
-    public function getQuestionario()
+    public function getRetornarQuestionario()
     {
         // Make the request
         try {
-            $request = $this->call('RetornarQuestionario', []);
+            $request = $this->call('RetornarQuestionario');
 
             if (isset($request->RetornarQuestionarioResult)) {
-                return $this->xmlToJsonConvert($request->RetornarQuestionarioResult);
+                return $this->xml2json($request->RetornarQuestionarioResult->any);
             } else {
                 throw new \Exception($this->exception);
             }

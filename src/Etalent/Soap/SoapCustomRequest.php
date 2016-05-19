@@ -35,13 +35,6 @@ class SoapCustomRequest extends \SoapClient
         return $this->__soapCall($service, $arguments);
     }
 
-    public function xmlToJsonConvert($xml)
-    {
-        foreach ($xml as $value) {
-            return $this->xml2json($value);
-        }
-    }
-
     public function xml2json($xmlString)
     {
         $start_tree = (array) simplexml_load_string($xmlString);
@@ -50,7 +43,7 @@ class SoapCustomRequest extends \SoapClient
 
         $this->loopRecursivelyForAttributes($start_tree, $final_tree);
 
-        return json_encode($final_tree);
+        return $final_tree;
     }
 
     public function loopRecursivelyForAttributes($start_tree, &$final_tree)
