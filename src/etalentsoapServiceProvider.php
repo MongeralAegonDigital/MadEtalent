@@ -1,11 +1,12 @@
 <?php
 
-namespace madetalent\etalentsoap;
+namespace Madetalent\Etalentsoap;
 
 use Illuminate\Support\ServiceProvider;
 
 class etalentsoapServiceProvider extends ServiceProvider
 {
+
     /**
      * Perform post-registration booting of services.
      *
@@ -13,7 +14,7 @@ class etalentsoapServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Not really anything to boot.
     }
 
     /**
@@ -23,6 +24,19 @@ class etalentsoapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register('Artisaninweb\SoapWrapper\ServiceProvider');
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        $loader->alias('SoapWrapper', 'Artisaninweb\SoapWrapper\Facades\SoapWrapper');
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        // Nothing here
     }
 }
