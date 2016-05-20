@@ -2,7 +2,10 @@
 
 namespace Madetalent\Etalentsoap\Etalent;
 
-use madetalent\etalentsoap\Etalent\Soap\SoapCustomRequest;
+use \Exception;
+use \Madetalent\Etalentsoap\Etalent\DTO\User as EtalentUser;
+use \madetalent\etalentsoap\Etalent\Soap\SoapCustomRequest;
+use \SoapFault;
 
 class ManagerEtalentStrategy extends SoapCustomRequest
 {
@@ -23,10 +26,28 @@ class ManagerEtalentStrategy extends SoapCustomRequest
             if (isset($request->RetornarQuestionarioResult)) {
                 return $this->xml2json($request->RetornarQuestionarioResult->any);
             } else {
-                throw new \Exception($this->exception);
+                throw new Exception($this->exception);
             }
-        } catch (\SoapFault $e) {
-            throw new \Exception($e->getMessage(), $e->getCode());
+        } catch (SoapFault $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function setGravarCandidatoEtalent(EtalentUser $user)
+    {
+        // Make the request
+        try {
+            $request = $this->call('GravarCandidatoEtalent', []);
+
+            dd($request);
+
+            if (isset($request->RetornarQuestionarioResult)) {
+                return $this->xml2json($request->RetornarQuestionarioResult->any);
+            } else {
+                throw new Exception($this->exception);
+            }
+        } catch (SoapFault $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
         }
     }
 }

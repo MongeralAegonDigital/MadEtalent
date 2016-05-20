@@ -27,11 +27,21 @@ class SoapCustomRequest extends \SoapClient
 
     public function __doRequest($request, $location, $action, $version, $one_way = NULL)
     {
+        dd($request);
         return parent::__doRequest($request, $location, $action, $version, $one_way);
     }
 
     public function call($service, $arguments = [])
     {
+//        ['nome' => $user->getName(),
+//            'sobreNome' => $user->getFinalName(),
+//            'sexo' => $user->getSex(),
+//            'email' => $user->getEmail(),
+//            'login' => $user->getLogin(),];
+
+        $test = new \SoapParam('nome', 'test');
+        dd($test);
+
         return $this->__soapCall($service, $arguments);
     }
 
