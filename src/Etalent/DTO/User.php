@@ -10,22 +10,36 @@ namespace Madetalent\Etalentsoap\Etalent\DTO;
  */
 class User
 {
+    private $nome, $sobreNome, $sexo, $email, $login;
 
-    private $name, $finalName, $sex, $email, $login;
-
-    public function getName()
+    public function getNome()
     {
-        return $this->name;
+        return $this->nome;
     }
 
-    public function getFinalName()
+    public function getSobreNome()
     {
-        return $this->finalName;
+        return $this->sobreNome;
     }
 
-    public function getSex()
+    public function getSexo()
     {
-        return $this->sex;
+        return $this->sexo;
+    }
+
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    public function setSobreNome($sobreNome)
+    {
+        $this->sobreNome = $sobreNome;
+    }
+
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
     }
 
     public function getEmail()
@@ -36,21 +50,6 @@ class User
     public function getLogin()
     {
         return $this->login;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    public function setFinalName($finalName)
-    {
-        $this->finalName = $finalName;
-    }
-
-    public function setSex($sex)
-    {
-        $this->sex = $sex;
     }
 
     public function setEmail($email)
