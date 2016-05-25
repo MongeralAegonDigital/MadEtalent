@@ -10,7 +10,6 @@ namespace Madetalent\Etalentsoap\Etalent\Soap;
  */
 class SoapCustomRequest extends \SoapClient
 {
-
     public $server;
 
     public function __construct($wsdl, $user, $password, $options)
@@ -19,15 +18,18 @@ class SoapCustomRequest extends \SoapClient
 
         $login = ['Login' => $user, 'Senha' => $password];
 
-        $headerLogin = new \SoapHeader('http://e-talent.com.br/', 'Consumer', $login);
+        $headerLogin = new \SoapHeader('http://e-talent.com.br/', 'Consumer',
+            $login);
         $this->__setSoapHeaders($headerLogin);
 
         $this->server = new \SoapServer($wsdl, $options);
     }
 
-    public function __doRequest($request, $location, $action, $version, $one_way = NULL)
+    public function __doRequest($request, $location, $action, $version,
+                                $one_way = NULL)
     {
-        return parent::__doRequest($request, $location, $action, $version, $one_way);
+        return parent::__doRequest($request, $location, $action, $version,
+                $one_way);
     }
 
     public function call($service, $arguments = [])
@@ -39,7 +41,7 @@ class SoapCustomRequest extends \SoapClient
     {
         $start_tree = (array) simplexml_load_string($xmlString);
 
-        $final_tree = array ();
+        $final_tree = array();
 
         $this->loopRecursivelyForAttributes($start_tree, $final_tree);
 
@@ -50,7 +52,7 @@ class SoapCustomRequest extends \SoapClient
     {
         foreach ($start_tree as $key1 => $row1) {
             if (!array_key_exists($key1, $final_tree)) {
-                $final_tree[$key1] = array ();
+                $final_tree[$key1] = array();
             }
 
             if (array_key_exists('@attributes', $row1)) {
@@ -76,11 +78,12 @@ class SoapCustomRequest extends \SoapClient
             if ($key3 == '@attributes') {
                 $final_tree[$key1][] = $val3;
             } else {
-                $temp_parent = array ();
+                $temp_parent = array();
 
                 $temp_parent[$key3] = $val3;
 
-                $this->loopRecursivelyForAttributes($temp_parent, $final_tree[$key1][count($final_tree[$key1]) - 1]);
+                $this->loopRecursivelyForAttributes($temp_parent,
+                    $final_tree[$key1][count($final_tree[$key1]) - 1]);
             }
         }
     }
