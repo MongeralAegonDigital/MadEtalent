@@ -1,4 +1,4 @@
-# :package_name
+# MAD Etalent SOAP Requests
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -7,50 +7,63 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-**Note:** Replace ```:author_name``` ```:author_username``` ```:author_website``` ```:author_email``` ```:vendor``` ```:package_name``` ```:package_description``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line.
+Esta é uma biblioteca construída especificamente para o framework Laravel na versão 5+.
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+Sua funcionalidade é fazer todas as requisições SOAP para os servidores do Etalent e tem como base a implementação de 5 métodos disponíveis para os clientes:
 
-## Install
+- RetornarQuestionario
+- GravarCandidatoEtalent
+- GravarPerfilEtalentVendas
+- RetornarMiniRelatorio
+
+Faça bom uso e colabore conosco :D
+
+## Instalação
 
 Via Composer
 
 ``` bash
-$ composer require :vendor/:package_name
+$ composer require madetalent/etalentsoap
 ```
 
-## Usage
+## Como utilizar
+
+Segue o exemplo de como constuir o retorno para o método RetornarQuestionario:
 
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+$etalent = new madetalent\etalentsoap\Etalent\ManagerEtalentStrategy(getenv('ETALENT_URL'),
+            getenv('ETALENT_USER'), getenv('ETALENT_PASS'));
+echo $etalent->getRetornarQuestionario();
 ```
 
-## Change log
+O getenv está referenciando as variáveis de ambiente usando uma lib externa. Essa parte é opicional para você.
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Existem alguns métodos que necessitam do preenchimento de alguns DTO's.
 
-## Testing
+Veja o exemplo para o método GravarCandidatoEtalent:
 
-``` bash
-$ composer test
+``` php
+$dtoUserEtalent = new madetalent\etalentsoap\Etalent\DTO\User();
+
+$dtoUserEtalent->setNome($explodeName[0]);
+$dtoUserEtalent->setSobreNome($explodeName[1]);
+$dtoUserEtalent->setSexo($sex);
+$dtoUserEtalent->setLogin($user->username);
+$dtoUserEtalent->setEmail($user->email);
+
+echo $etalent->setGravarCandidatoEtalent($dtoUserEtalent);
 ```
 
-## Contributing
+## Contribuintes
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
+Veja mais em: [CONTRIBUTING](CONTRIBUTING.md).
 
-## Security
+## Créditos
 
-If you discover any security related issues, please email :author_email instead of using the issue tracker.
-
-## Credits
-
-- [:author_name][link-author]
+- [Jonathan Iqueda][https://www.linkedin.com/profile/view?id=AAMAABVelbIBCTqbkTOmYlrNAYIn4G3VImw1mPM&trk=hp-identity-name]
 - [All Contributors][link-contributors]
 
-## License
+## Licença
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
