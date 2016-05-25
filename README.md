@@ -60,7 +60,7 @@ Veja mais em: [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Créditos
 
-- [Jonathan Iqueda][https://www.linkedin.com/profile/view?id=AAMAABVelbIBCTqbkTOmYlrNAYIn4G3VImw1mPM&trk=hp-identity-name]
+- [Jonathan Iqueda](https://www.linkedin.com/profile/view?id=AAMAABVelbIBCTqbkTOmYlrNAYIn4G3VImw1mPM&trk=hp-identity-name)
 - [All Contributors][link-contributors]
 
 ## Licença
