@@ -4,7 +4,7 @@ namespace Madetalent\Etalentsoap;
 
 use Illuminate\Support\ServiceProvider;
 
-class etalentsoapServiceProvider extends ServiceProvider
+class EtalentsoapServiceProvider extends ServiceProvider
 {
 
     /**
@@ -27,7 +27,8 @@ class etalentsoapServiceProvider extends ServiceProvider
         $this->app->register('Artisaninweb\SoapWrapper\ServiceProvider');
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('SoapWrapper', 'Artisaninweb\SoapWrapper\Facades\SoapWrapper');
+        $loader->alias('SoapWrapper',
+            'Artisaninweb\SoapWrapper\Facades\SoapWrapper');
     }
 
     /**
