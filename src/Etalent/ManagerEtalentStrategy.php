@@ -5,7 +5,7 @@ namespace Madetalent\Etalentsoap\Etalent;
 use Exception;
 use Madetalent\Etalentsoap\Etalent\DTO\Questions as EtalentQuestions;
 use Madetalent\Etalentsoap\Etalent\DTO\User as EtalentUser;
-use madetalent\etalentsoap\Etalent\Soap\SoapCustomRequest;
+use Madetalent\Etalentsoap\Etalent\Soap\SoapCustomRequest;
 use SoapFault;
 use stdClass;
 
@@ -60,6 +60,7 @@ class ManagerEtalentStrategy extends SoapCustomRequest
 
             if (isset($request->GravarPerfilEtalentVendasResult->any)) {
                 $result = (array) simplexml_load_string($request->GravarPerfilEtalentVendasResult->any);
+                $result = $this->object_to_array($result);
                 return $result;
             } else {
                 throw new Exception($this->exception);
