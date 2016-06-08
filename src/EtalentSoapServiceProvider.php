@@ -24,7 +24,7 @@ class EtalentSoapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Nothing here
+        // Nothing here to register
     }
 
     /**
@@ -34,6 +34,6 @@ class EtalentSoapServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        // Nothing here
+        // Nothing here to provider
     }
 }
