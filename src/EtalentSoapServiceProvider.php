@@ -24,11 +24,7 @@ class EtalentSoapServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register('Artisaninweb\SoapWrapper\ServiceProvider');
-
-        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('SoapWrapper',
-            'Artisaninweb\SoapWrapper\Facades\SoapWrapper');
+        // Nothing here
     }
 
     /**
