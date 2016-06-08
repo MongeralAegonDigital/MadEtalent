@@ -27,7 +27,6 @@
         "psr-4": {
             "MadEtalent\\EtalentSoap\\": "src"
         }
-        
     },
     "extra": {
         "branch-alias": {
