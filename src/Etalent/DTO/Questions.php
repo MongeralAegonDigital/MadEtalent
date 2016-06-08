@@ -1,6 +1,6 @@
 <?php
 
-namespace Madetalent\Etalentsoap\Etalent\DTO;
+namespace MadEtalent\EtalentSoap\Etalent\DTO;
 
 use stdClass;
 

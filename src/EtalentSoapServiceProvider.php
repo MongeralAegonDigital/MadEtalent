@@ -1,10 +1,10 @@
 <?php
 
-namespace Madetalent\Etalentsoap;
+namespace MadEtalent\EtalentSoap;
 
 use Illuminate\Support\ServiceProvider;
 
-class EtalentsoapServiceProvider extends ServiceProvider
+class EtalentSoapServiceProvider extends ServiceProvider
 {
 
     /**

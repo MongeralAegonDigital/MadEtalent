@@ -1,6 +1,6 @@
 <?php
 
-namespace Madetalent\Etalentsoap\Etalent;
+namespace MadEtalent\EtalentSoap\Etalent;
 
 use \Exception;
 
