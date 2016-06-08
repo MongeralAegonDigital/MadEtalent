@@ -1,6 +1,6 @@
 <?php
 
-namespace Madetalent\Etalentsoap\Etalent\DTO;
+namespace MadEtalent\EtalentSoap\Etalent\DTO;
 
 /**
  * This class are responsiable to set some user informations

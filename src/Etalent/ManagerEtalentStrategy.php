@@ -1,11 +1,11 @@
 <?php
 
-namespace Madetalent\Etalentsoap\Etalent;
+namespace MadEtalent\EtalentSoap\Etalent;
 
 use Exception;
-use Madetalent\Etalentsoap\Etalent\DTO\Questions as EtalentQuestions;
-use Madetalent\Etalentsoap\Etalent\DTO\User as EtalentUser;
-use Madetalent\Etalentsoap\Etalent\Soap\SoapCustomRequest;
+use MadEtalent\EtalentSoap\Etalent\DTO\Questions as EtalentQuestions;
+use MadEtalent\EtalentSoap\Etalent\DTO\User as EtalentUser;
+use MadEtalent\EtalentSoap\Etalent\Soap\SoapCustomRequest;
 use SoapFault;
 use stdClass;
 
