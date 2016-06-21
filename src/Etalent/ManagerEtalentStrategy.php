@@ -52,7 +52,7 @@ class ManagerEtalentStrategy extends SoapCustomRequest
         }
     }
 
-    public function setGraverPerfilEtalentVendas(EtalentQuestions $questions)
+    public function setGravarPerfilEtalentVendas(EtalentQuestions $questions)
     {
         // Make the request
         try {
