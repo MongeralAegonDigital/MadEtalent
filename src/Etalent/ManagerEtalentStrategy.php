@@ -15,8 +15,7 @@ class ManagerEtalentStrategy extends SoapCustomRequest
 
     public function __construct($wsdlUrl, $user, $pass)
     {
-        parent::__construct($wsdlUrl, $user, $pass,
-            [ 'cache_wsdl' => WSDL_CACHE_NONE, 'trace' => true, 'exceptions' => true]);
+        parent::__construct($wsdlUrl, $user, $pass, [ 'cache_wsdl' => WSDL_CACHE_NONE, 'trace' => true, 'exceptions' => true]);
     }
 
     public function getRetornarQuestionario()
@@ -41,8 +40,7 @@ class ManagerEtalentStrategy extends SoapCustomRequest
         try {
             $request = $this->call('GravarCandidatoEtalent', [$user]);
 
-            if (isset($request->GravarCandidatoEtalentResult->RealizadoComSucesso)
-                && $request->GravarCandidatoEtalentResult->RealizadoComSucesso) {
+            if (isset($request->GravarCandidatoEtalentResult->RealizadoComSucesso) && $request->GravarCandidatoEtalentResult->RealizadoComSucesso) {
                 return $request->GravarCandidatoEtalentResult;
             } else {
                 throw new Exception($this->exception);
@@ -88,5 +86,45 @@ class ManagerEtalentStrategy extends SoapCustomRequest
         } catch (SoapFault $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    public function getRetornaCorrelaçãoCandidatos($etalentUserId)
+    {
+        $user         = new stdClass();
+        $user->userid = $etalentUserId;
+
+        // Make the request
+        try {
+            $request = $this->call('RetornaCorrelacaoCandidatos', [$user]);
+
+            if (isset($request->RetornaCorrelacaoCandidatosResult->any)) {
+
+                $matches       = [];
+                $etalentGrades = $request->RetornaCorrelacaoCandidatosResult->any;
+                preg_match_all('/(?<=<User>).*?(?=<Cargo>)/imx', $etalentGrades, $matches);
+                $matches       = isset($matches[0]) ? $matches[0] : $matches;
+
+                foreach ($matches as $v) {
+                    $etalentGrades = str_replace($v, "<id>$v</id>", $etalentGrades);
+                }
+
+                $result = $this->parse($etalentGrades);
+                return isset($result['User']) ? $result['User'] : 'Nenhum resultado encontrado';
+            } else {
+                throw new Exception($this->exception);
+            }
+        } catch (SoapFault $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public static function parse($contents)
+    {
+        $contents  = str_replace(array("\n", "\r", "\t"), '', $contents);
+        $contents  = trim(str_replace('"', "'", $contents));
+        $simpleXml = simplexml_load_string($contents);
+        $json      = json_encode($simpleXml);
+
+        return json_decode($json, true);
     }
 }
