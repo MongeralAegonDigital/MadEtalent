@@ -91,20 +91,40 @@ class ManagerEtalentStrategy extends SoapCustomRequest
     public function getRetornaCorrelaçãoCandidatos($etalentUserId)
     {
         $user         = new stdClass();
-        $user->userId = $etalentUserId;
+        $user->userid = $etalentUserId;
 
         // Make the request
         try {
             $request = $this->call('RetornaCorrelacaoCandidatos', [$user]);
 
             if (isset($request->RetornaCorrelacaoCandidatosResult->any)) {
-                $result = (array) simplexml_load_string($request->RetornaCorrelacaoCandidatosResult->any);
-                return $result;
+
+                $matches       = [];
+                $etalentGrades = $request->RetornaCorrelacaoCandidatosResult->any;
+                preg_match_all('/(?<=<User>).*?(?=<Cargo>)/imx', $etalentGrades, $matches);
+                $matches       = isset($matches[0]) ? $matches[0] : $matches;
+
+                foreach ($matches as $v) {
+                    $etalentGrades = str_replace($v, "<id>$v</id>", $etalentGrades);
+                }
+
+                $result = $this->parse($etalentGrades);
+                return isset($result['User']) ? $result['User'] : 'Nenhum resultado encontrado';
             } else {
                 throw new Exception($this->exception);
             }
         } catch (SoapFault $e) {
             throw new Exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    public static function parse($contents)
+    {
+        $contents  = str_replace(array("\n", "\r", "\t"), '', $contents);
+        $contents  = trim(str_replace('"', "'", $contents));
+        $simpleXml = simplexml_load_string($contents);
+        $json      = json_encode($simpleXml);
+
+        return json_decode($json, true);
     }
 }
