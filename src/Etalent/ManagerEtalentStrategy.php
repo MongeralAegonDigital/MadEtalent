@@ -88,7 +88,7 @@ class ManagerEtalentStrategy extends SoapCustomRequest
         }
     }
 
-    public function getRetornaCorrelaçãoCandidatos($etalentUserId)
+    public function getRetornaCorrelacaoCandidatos($etalentUserId)
     {
         $user         = new stdClass();
         $user->userid = $etalentUserId;
