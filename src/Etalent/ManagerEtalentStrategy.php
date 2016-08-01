@@ -20,7 +20,6 @@ class ManagerEtalentStrategy extends SoapCustomRequest
 
     public function getRetornarQuestionario()
     {
-        // Make the request
         try {
             $request = $this->call('RetornarQuestionario');
 
@@ -36,7 +35,6 @@ class ManagerEtalentStrategy extends SoapCustomRequest
 
     public function setGravarCandidatoEtalent(EtalentUser $user)
     {
-        // Make the request
         try {
             $request = $this->call('GravarCandidatoEtalent', [$user]);
 
@@ -52,7 +50,6 @@ class ManagerEtalentStrategy extends SoapCustomRequest
 
     public function setGravarPerfilEtalentVendas(EtalentQuestions $questions)
     {
-        // Make the request
         try {
             $request = $this->call('GravarPerfilEtalentVendas', [$questions]);
 
@@ -73,7 +70,6 @@ class ManagerEtalentStrategy extends SoapCustomRequest
         $user         = new stdClass();
         $user->userId = $etalentUserId;
 
-        // Make the request
         try {
             $request = $this->call('RetornarMiniRelatorio', [$user]);
 
@@ -88,12 +84,11 @@ class ManagerEtalentStrategy extends SoapCustomRequest
         }
     }
 
-    public function getRetornaCorrelaçãoCandidatos($etalentUserId)
+    public function getRetornaCorrelacaoCandidatos($etalentUserId)
     {
         $user         = new stdClass();
         $user->userid = $etalentUserId;
 
-        // Make the request
         try {
             $request = $this->call('RetornaCorrelacaoCandidatos', [$user]);
 
@@ -110,6 +105,60 @@ class ManagerEtalentStrategy extends SoapCustomRequest
 
                 $result = $this->parse($etalentGrades);
                 return isset($result['User']) ? $result['User'] : 'Nenhum resultado encontrado';
+            } else {
+                throw new Exception($this->exception);
+            }
+        } catch (SoapFault $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+    
+    public function getRetornarCandidatoPorEmail($email) {
+        $user         = new stdClass();
+        $user->email = $email;
+
+        try {
+            $request = $this->call('RetornarCandidatoPorEmail', [$user]);
+            
+            if (isset($request->RetornarCandidatoPorEmailResult->RealizadoComSucesso)) {
+                $res = $request->RetornarCandidatoPorEmailResult;
+                
+                return [
+                    'result' => $res->RealizadoComSucesso,
+                    'msg' => $res->MensagemErro,
+                    'userId' => $res->UserId,
+                    'name' => $res->Nome,
+                    'surname' => $res->SobreNome,
+                    'gender' => $res->Sexo,
+                    'email' => $res->Email,
+                ];
+            } else {
+                throw new Exception($this->exception);
+            }
+        } catch (SoapFault $e) {
+            throw new Exception($e->getMessage(), $e->getCode());
+        }
+    }
+    
+    public function getRetornarCandidatoPorLogin($login) {
+        $user         = new stdClass();
+        $user->username = $login;
+
+        try {
+            $request = $this->call('RetornarCandidatoPorLogin', [$user]);
+            
+            if (isset($request->RetornarCandidatoPorLoginResult->RealizadoComSucesso)) {
+                $res = $request->RetornarCandidatoPorLoginResult;
+                
+                return [
+                    'result' => $res->RealizadoComSucesso,
+                    'msg' => $res->MensagemErro,
+                    'userId' => $res->UserId,
+                    'name' => $res->Nome,
+                    'surname' => $res->SobreNome,
+                    'gender' => $res->Sexo,
+                    'email' => $res->Email,
+                ];
             } else {
                 throw new Exception($this->exception);
             }
