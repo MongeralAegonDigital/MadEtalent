@@ -10,6 +10,8 @@ Sua funcionalidade é fazer todas as requisições SOAP para os servidores do Et
 - GravarCandidatoEtalent
 - GravarPerfilEtalentVendas
 - RetornarMiniRelatorio
+- RetornarCandidatoPorEmail
+- RetornarCandidatoPorLogin
 
 Faça bom uso e colabore conosco :D
 
